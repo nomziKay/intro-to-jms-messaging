@@ -2,17 +2,13 @@ package za.co.entelect.invest.easy.dojo.messaging.listener;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
-import javax.jms.Message;
-import javax.jms.MessageListener;
-
-public class InvestEasyListener implements MessageListener {
+@Component
+public class InvestEasyListener {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(InvestEasyListener.class);
 
-    @Override
-    public void onMessage(Message message) {
-        //TODO: 3. Implement this method by checking if it is a TextMessage then log the message
+    //TODO: 2. Add method with the queue that it must listen to
 
-    }
 }

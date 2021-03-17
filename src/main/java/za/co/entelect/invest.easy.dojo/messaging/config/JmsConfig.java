@@ -31,8 +31,4 @@ public class JmsConfig {
 //        template.setDefaultDestination(); //this is the default destination that will be used if none is specified in the method
     }
 
-    //TODO: 1. Create the Listener Container Factory
-
-    //TODO: 2. Create the Listener Container using the factory and set the queue
-
 }
