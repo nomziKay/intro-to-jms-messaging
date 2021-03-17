@@ -1,14 +1,14 @@
 package za.co.entelect.invest.easy.dojo.messaging.publisher;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Component;
-
-import java.util.logging.Logger;
 
 @Component
 public class MessagePublisher {
 
-    private static final Logger LOGGER = Logger.getLogger("MessagePublisher.class");
+    private static final Logger LOGGER = LoggerFactory.getLogger(MessagePublisher.class);
 
     private final JmsTemplate jmsTemplate;
 
