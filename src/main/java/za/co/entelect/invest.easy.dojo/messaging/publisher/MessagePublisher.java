@@ -1,15 +1,14 @@
 package za.co.entelect.invest.easy.dojo.messaging.publisher;
 
 import org.springframework.jms.core.JmsTemplate;
-import org.springframework.jms.core.MessageCreator;
 import org.springframework.stereotype.Component;
 
-import javax.jms.JMSException;
-import javax.jms.Message;
-import javax.jms.Session;
+import java.util.logging.Logger;
 
 @Component
 public class MessagePublisher {
+
+    private static final Logger LOGGER = Logger.getLogger("MessagePublisher.class");
 
     private final JmsTemplate jmsTemplate;
 
@@ -17,13 +16,12 @@ public class MessagePublisher {
         this.jmsTemplate = jmsTemplate;
     }
 
-
     public void sendTextMessage(final String destination, final String message) {
-        System.out.println("================Sending simple text message=========================");
-        System.out.println("Destination: " + destination);
-        System.out.println("Message: " + message);
+        LOGGER.info("================Sending simple text message=========================");
+        LOGGER.info("Destination: " + destination);
+        LOGGER.info("Message: " + message);
         //TODO: 3. Send a simple text message using the jmsTemplate
-        System.out.println("================Done sending simple text message====================");
+        LOGGER.info("================Done sending simple text message====================");
     }
 
 }

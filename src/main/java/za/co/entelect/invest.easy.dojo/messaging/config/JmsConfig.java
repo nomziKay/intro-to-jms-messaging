@@ -1,9 +1,6 @@
 package za.co.entelect.invest.easy.dojo.messaging.config;
 
-import org.apache.activemq.ActiveMQConnectionFactory;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.jms.core.JmsTemplate;
 
 @Configuration
 public class JmsConfig {
