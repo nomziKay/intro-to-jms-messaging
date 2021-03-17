@@ -45,9 +45,8 @@ public class MessagePublisher {
         try {
             //TODO: 1. Use JmsTemplate to convert and send the message
             LOGGER.info("Message: " + sentMessage.get().getBody(Map.class));
-            LOGGER.info("Connection: " + jmsTemplate.getConnectionFactory());
         } catch (JMSException e) {
-            e.printStackTrace();
+            LOGGER.severe(e.getMessage());
         }
 
         LOGGER.info("================Done sending simple text message====================");
