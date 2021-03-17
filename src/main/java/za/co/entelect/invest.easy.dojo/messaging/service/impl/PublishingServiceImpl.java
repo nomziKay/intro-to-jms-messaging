@@ -5,10 +5,13 @@ import org.springframework.stereotype.Service;
 import za.co.entelect.invest.easy.dojo.messaging.publisher.MessagePublisher;
 import za.co.entelect.invest.easy.dojo.messaging.service.PublishingService;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Service
 public class PublishingServiceImpl implements PublishingService {
 
-    private MessagePublisher messagePublisher;
+    private final MessagePublisher messagePublisher;
 
     @Value("Q.za.co.entelect.dojo.jms")
     private String queueName;
@@ -20,5 +23,12 @@ public class PublishingServiceImpl implements PublishingService {
     @Override
     public void publishChanges(String changes) {
         messagePublisher.sendTextMessage(queueName, changes);
+    }
+
+    @Override
+    public void convertAndSendMessage(String key, String value) {
+        Map<String, String> map = new HashMap<>();
+        map.put(key, value);
+        messagePublisher.sendConvertedTextMessage(queueName, map);
     }
 }
