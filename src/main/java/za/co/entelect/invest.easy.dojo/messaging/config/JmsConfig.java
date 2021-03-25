@@ -7,6 +7,7 @@ import org.springframework.jms.core.JmsTemplate;
 
 import javax.jms.JMSException;
 
+//TODO: 1. Add @EnableJms annotation for the discovery of the methods with @JmsListener
 @Configuration
 public class JmsConfig {
 
@@ -28,7 +29,6 @@ public class JmsConfig {
     @Bean
     public JmsTemplate jmsTemplate() throws JMSException {
         return new JmsTemplate(connectionFactory());
-//        template.setDefaultDestination(); //this is the default destination that will be used if none is specified in the method
     }
 
 }
