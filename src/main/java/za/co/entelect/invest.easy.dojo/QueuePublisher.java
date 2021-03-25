@@ -1,9 +1,8 @@
 package za.co.entelect.invest.easy.dojo;
 
-import javax.jms.Connection;
-import javax.jms.JMSException;
-import javax.jms.MessageProducer;
-import javax.jms.Session;
+import org.apache.activemq.ActiveMQConnectionFactory;
+
+import javax.jms.*;
 import java.util.Scanner;
 
 public class QueuePublisher {
@@ -15,18 +14,28 @@ public class QueuePublisher {
 
     public QueuePublisher() throws JMSException {
         System.out.println("Initializing JMS connection");
+        //ActiveMQConnectionFactory.DEFAULT_BROKER_URL = tcp://localhost:61616
+        ConnectionFactory connectionFactory = new ActiveMQConnectionFactory(ActiveMQConnectionFactory.DEFAULT_BROKER_URL);
+        connection = connectionFactory.createConnection();
+        session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
 
-        //Initialize JMS Connection
+        Destination writeDestination = session.createQueue("Q.za.co.entelect.dojo.jms");
+
+        messageProducer = session.createProducer(writeDestination);
+
+        connection.start();
 
         System.out.println("Initialization Complete");
     }
 
     public void publishMessage(String message) throws JMSException {
-        //Send Message
+        Message jmsMessage = session.createTextMessage(message);
+        messageProducer.send(jmsMessage);
     }
 
     public void closeConnection() throws JMSException {
         System.out.println("Closing JMS connection");
+        connection.close();
     }
 
     public static void main(String[] args) throws JMSException {
