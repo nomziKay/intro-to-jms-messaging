@@ -10,7 +10,6 @@ import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.Session;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicReference;
 
 @Component
 public class MessagePublisher {
@@ -40,15 +39,10 @@ public class MessagePublisher {
     public void sendConvertedTextMessage(final String destination, final Map<String, String> message) {
         LOGGER.info("================Sending converted text message=========================");
         LOGGER.info("Destination: " + destination);
+        LOGGER.info("Message: " + message);
 
-        final AtomicReference<Message> sentMessage = new AtomicReference<>();
-
-        try {
-            //TODO: 1. Use JmsTemplate to convert and send the message
-            LOGGER.info("Message: " + sentMessage.get().getBody(Map.class));
-        } catch (JMSException e) {
-            LOGGER.error("Unable to get the contents of the message",e.getMessage());
-        }
+        //TODO: 1. Use JmsTemplate to convert and send the message
+   
 
         LOGGER.info("================Done sending simple text message====================");
 
