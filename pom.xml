@@ -13,9 +13,7 @@
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>InvestEasy</name>
-    <description>InvestEasy is an investment application which helps you manage your investments by monitoring market
-        changes and publishing them to the different clients
-    </description>
+    <description>InvestEasy is an investment application which helps you manage your investments by monitoring market changes and publishing them to the different clients</description>
 
     <properties>
         <java.version>1.8</java.version>
@@ -41,6 +39,10 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
     </dependencies>
 
