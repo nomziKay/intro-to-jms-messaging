@@ -4,5 +4,4 @@ public interface InvestEasyChangeNotificationService {
 
     void publishChanges(String changes);
 
-    void convertAndSendMessage(String key, String value);
 }

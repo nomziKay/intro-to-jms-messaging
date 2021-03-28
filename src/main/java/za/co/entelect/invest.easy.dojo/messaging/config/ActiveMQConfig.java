@@ -4,6 +4,8 @@ import org.apache.activemq.artemis.jms.client.ActiveMQConnectionFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jms.core.JmsTemplate;
+import org.springframework.jms.listener.SimpleMessageListenerContainer;
+import za.co.entelect.invest.easy.dojo.messaging.listener.InvestEasyChangeNotificationListener;
 
 @Configuration
 public class ActiveMQConfig {
@@ -16,17 +18,26 @@ public class ActiveMQConfig {
     String USERNAME = "admin";
     String PASSWORD = "admin";
 
-    //TODO: 1. Create the connectionFactory
     //This will be an activeMQ connectionFactory since our message broker is ActiveMQ
     @Bean
-    public ActiveMQConnectionFactory connectionFactory(){
-        return new ActiveMQConnectionFactory(URL,USERNAME,PASSWORD);
+    public ActiveMQConnectionFactory connectionFactory() {
+        return new ActiveMQConnectionFactory(URL, USERNAME, PASSWORD);
     }
 
-    //TODO: 2. Create a jmsTemplate bean named changeNotificationJmsTemplate
     @Bean
-    public JmsTemplate changeNotificationJmsTemplate(){
+    public JmsTemplate changeNotificationJmsTemplate() {
         return new JmsTemplate(connectionFactory());
+    }
+
+    //TODO 1. Create the SimpleMessageListenerContainer bean
+    @Bean
+    public SimpleMessageListenerContainer simpleMessageListenerContainer() {
+        SimpleMessageListenerContainer container = new SimpleMessageListenerContainer();
+        container.setConnectionFactory(connectionFactory());
+        container.setMessageListener(new InvestEasyChangeNotificationListener());
+        container.setDestinationName("Q.za.co.investeasy.change.notification");
+
+        return container;
     }
 
 }
