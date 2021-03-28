@@ -1,6 +1,6 @@
 package za.co.entelect.invest.easy.dojo.messaging.service;
 
-public interface PublishingService {
+public interface InvestEasyChangeNotificationService {
 
     void publishChanges(String changes);
 
