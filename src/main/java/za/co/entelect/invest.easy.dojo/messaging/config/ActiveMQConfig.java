@@ -1,33 +1,32 @@
 package za.co.entelect.invest.easy.dojo.messaging.config;
 
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.apache.activemq.artemis.jms.client.ActiveMQConnectionFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jms.core.JmsTemplate;
-import org.springframework.jms.support.converter.MappingJackson2MessageConverter;
-import org.springframework.jms.support.converter.MessageType;
-
-import javax.jms.ConnectionFactory;
-import javax.jms.JMSException;
 
 @Configuration
 public class ActiveMQConfig {
-    //We explicitly define a message converter to convert our objects to json
+
+    //Please note: This is not required when using SpringBoot; we will explicitly define the beans here to demo how it should be done when using a traditional Spring application
+    //We will only define the jmsTemplate moving forward as we need to add some of our own properties to it.
+
+    //Store these in a seperate config file/app
+    String URL = "tcp://localhost:61616";
+    String USERNAME = "admin";
+    String PASSWORD = "admin";
+
+    //TODO: 1. Create the connectionFactory
+    //This will be an activeMQ connectionFactory since our message broker is ActiveMQ
     @Bean
-    public MappingJackson2MessageConverter jacksonMessageConverter() {
-        MappingJackson2MessageConverter converter = new MappingJackson2MessageConverter();
-        converter.setTargetType(MessageType.TEXT);
-        converter.setTypeIdPropertyName("_type");
-        return converter;
+    public ActiveMQConnectionFactory connectionFactory(){
+        return new ActiveMQConnectionFactory(URL,USERNAME,PASSWORD);
     }
 
-    //We explicitly define connection factory so we can set the PubSubDomain property
+    //TODO: 2. Create a jmsTemplate bean named changeNotificationJmsTemplate
     @Bean
-    public JmsTemplate jmsTemplate(@Qualifier("jmsConnectionFactory") ConnectionFactory connectionFactory) throws JMSException {
-        JmsTemplate jmsTemplate = new JmsTemplate();
-        jmsTemplate.setConnectionFactory(connectionFactory);
-        jmsTemplate.setPubSubDomain(true);  // enable for Pub Sub to topic. Not Required for Queue.
-        jmsTemplate.setMessageConverter(jacksonMessageConverter());
-        return jmsTemplate;
+    public JmsTemplate changeNotificationJmsTemplate(){
+        return new JmsTemplate(connectionFactory());
     }
+
 }

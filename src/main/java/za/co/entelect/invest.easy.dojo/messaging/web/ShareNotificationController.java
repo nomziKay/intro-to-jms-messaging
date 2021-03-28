@@ -1,25 +1,23 @@
 package za.co.entelect.invest.easy.dojo.messaging.web;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import za.co.entelect.invest.easy.dojo.messaging.domain.ShareCode;
-import za.co.entelect.invest.easy.dojo.messaging.service.ShareNotificationService;
+import za.co.entelect.invest.easy.dojo.messaging.service.InvestEasyChangeNotificationService;
 
 @RestController
 public class ShareNotificationController {
 
-    private ShareNotificationService shareNotificationService;
+    private final InvestEasyChangeNotificationService investEasyChangeNotificationService;
 
-    @Autowired
-    public ShareNotificationController(ShareNotificationService shareNotificationService) {
-        this.shareNotificationService = shareNotificationService;
+    public ShareNotificationController(InvestEasyChangeNotificationService investEasyChangeNotificationService) {
+        this.investEasyChangeNotificationService = investEasyChangeNotificationService;
     }
 
     @PostMapping("/share-price/{code}/{price}")
     public String sendSharePriceChange(@PathVariable("code") ShareCode code, @PathVariable("price") Integer price) {
-        shareNotificationService.sendShareNotification(code, price);
+        investEasyChangeNotificationService.publishChanges("There were changes to the following share: " + code.getDescription() + ", new price: " + price);
         return "Success";
     }
 }
