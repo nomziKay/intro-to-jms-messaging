@@ -6,12 +6,15 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.jms.listener.SimpleMessageListenerContainer;
 import za.co.entelect.invest.easy.dojo.messaging.listener.InvestEasyChangeNotificationListener;
+import org.springframework.jms.support.converter.MappingJackson2MessageConverter;
+import org.springframework.jms.support.converter.MessageType;
+
+import javax.jms.JMSException;
 
 @Configuration
 public class ActiveMQConfig {
 
     //Please note: This is not required when using SpringBoot; we will explicitly define the beans here to demo how it should be done when using a traditional Spring application
-    //We will only define the jmsTemplate moving forward as we need to add some of our own properties to it.
 
     //Store these in a seperate config file/app
     String URL = "tcp://localhost:61616";
@@ -38,6 +41,25 @@ public class ActiveMQConfig {
         container.setDestinationName("Q.za.co.investeasy.change.notification");
 
         return container;
+    }
+
+    //TODO: 1. Create the jmsTemplate to publish to a Topic
+    @Bean
+    public MappingJackson2MessageConverter jacksonMessageConverter() {
+        MappingJackson2MessageConverter converter = new MappingJackson2MessageConverter();
+        converter.setTargetType(MessageType.TEXT);
+        converter.setTypeIdPropertyName("_type");
+        return converter;
+    }
+
+    //We explicitly define connection factory so we can set the PubSubDomain property
+    @Bean(name = "easyInvestJmsTemplate")
+    public JmsTemplate jmsTemplate() throws JMSException {
+        JmsTemplate jmsTemplate = new JmsTemplate();
+        jmsTemplate.setConnectionFactory(connectionFactory());
+        jmsTemplate.setPubSubDomain(true);  // enable for Pub Sub to topic. Not Required for Queue.
+        jmsTemplate.setMessageConverter(jacksonMessageConverter());
+        return jmsTemplate;
     }
 
 }
