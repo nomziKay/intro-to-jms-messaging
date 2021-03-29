@@ -7,6 +7,9 @@ public class ShareNotification implements Serializable {
     private Integer newPrice;
     private Integer oldPrice;
 
+    public ShareNotification() {
+    }
+
     public ShareNotification(ShareCode shareCode, Integer newPrice, Integer oldPrice) {
         this.shareCode = shareCode;
         this.newPrice = newPrice;
@@ -35,5 +38,14 @@ public class ShareNotification implements Serializable {
 
     public void setOldPrice(Integer oldPrice) {
         this.oldPrice = oldPrice;
+    }
+
+    @Override
+    public String toString() {
+        return "ShareNotification{" +
+                "shareCode=" + shareCode +
+                ", newPrice=" + newPrice +
+                ", oldPrice=" + oldPrice +
+                '}';
     }
 }
