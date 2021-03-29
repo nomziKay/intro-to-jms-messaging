@@ -62,14 +62,4 @@ public class ActiveMQConfig {
         return jmsTemplate;
     }
 
-    @Bean
-    public DefaultJmsListenerContainerFactory stockMarketContainerFactory() {
-        DefaultJmsListenerContainerFactory factory = new DefaultJmsListenerContainerFactory();
-        factory.setConnectionFactory(connectionFactory());
-        factory.setConcurrency("1-1"); //number of consumers to create. Starts with minimum then scales up as load increases
-        factory.setPubSubDomain(true);
-        factory.setMessageConverter(jacksonMessageConverter());
-        return factory;
-    }
-
 }
