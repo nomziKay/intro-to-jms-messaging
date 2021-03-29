@@ -4,8 +4,6 @@ import org.apache.activemq.artemis.jms.client.ActiveMQConnectionFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jms.core.JmsTemplate;
-import org.springframework.jms.listener.SimpleMessageListenerContainer;
-import za.co.entelect.invest.easy.dojo.messaging.listener.InvestEasyChangeNotificationListener;
 import org.springframework.jms.support.converter.MappingJackson2MessageConverter;
 import org.springframework.jms.support.converter.MessageType;
 
@@ -32,18 +30,6 @@ public class ActiveMQConfig {
         return new JmsTemplate(connectionFactory());
     }
 
-    //TODO 1. Create the SimpleMessageListenerContainer bean
-    @Bean
-    public SimpleMessageListenerContainer simpleMessageListenerContainer() {
-        SimpleMessageListenerContainer container = new SimpleMessageListenerContainer();
-        container.setConnectionFactory(connectionFactory());
-        container.setMessageListener(new InvestEasyChangeNotificationListener());
-        container.setDestinationName("Q.za.co.investeasy.change.notification");
-
-        return container;
-    }
-
-    //TODO: 1. Create the jmsTemplate to publish to a Topic
     @Bean
     public MappingJackson2MessageConverter jacksonMessageConverter() {
         MappingJackson2MessageConverter converter = new MappingJackson2MessageConverter();
@@ -61,5 +47,7 @@ public class ActiveMQConfig {
         jmsTemplate.setMessageConverter(jacksonMessageConverter());
         return jmsTemplate;
     }
+
+    //TODO 1. Create the SimpleMessageListenerContainer bean
 
 }

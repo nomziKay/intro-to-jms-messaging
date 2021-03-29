@@ -12,12 +12,12 @@ import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.Session;
 
+import static za.co.entelect.invest.easy.dojo.messaging.domain.Constants.CHANGE_NOTIFICATION_QUEUE;
+
 @Service
 public class InvestEasyChangeNotificationServiceImpl implements InvestEasyChangeNotificationService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(InvestEasyChangeNotificationServiceImpl.class);
-
-    private static final String CHANGE_NOTIFICATION_QUEUE = "Q.za.co.investeasy.change.notification";
 
     private final JmsTemplate jmsTemplate;
 
@@ -29,7 +29,6 @@ public class InvestEasyChangeNotificationServiceImpl implements InvestEasyChange
     public void publishChanges(String changeNotification) {
         LOGGER.info("================Sending change notification as a simple text message=========================");
 
-        //TODO: 3. Send a simple text message using the jmsTemplate
         jmsTemplate.send(CHANGE_NOTIFICATION_QUEUE, new MessageCreator() {
             @Override
             public Message createMessage(Session session) throws JMSException {
