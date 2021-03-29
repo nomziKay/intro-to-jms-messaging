@@ -3,6 +3,7 @@ package za.co.entelect.invest.easy.dojo.messaging.config;
 import org.apache.activemq.artemis.jms.client.ActiveMQConnectionFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.jms.config.DefaultJmsListenerContainerFactory;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.jms.listener.SimpleMessageListenerContainer;
 import za.co.entelect.invest.easy.dojo.messaging.listener.InvestEasyChangeNotificationListener;
@@ -43,7 +44,6 @@ public class ActiveMQConfig {
         return container;
     }
 
-    //TODO: 1. Create the jmsTemplate to publish to a Topic
     @Bean
     public MappingJackson2MessageConverter jacksonMessageConverter() {
         MappingJackson2MessageConverter converter = new MappingJackson2MessageConverter();
@@ -60,6 +60,16 @@ public class ActiveMQConfig {
         jmsTemplate.setPubSubDomain(true);  // enable for Pub Sub to topic. Not Required for Queue.
         jmsTemplate.setMessageConverter(jacksonMessageConverter());
         return jmsTemplate;
+    }
+
+    @Bean
+    public DefaultJmsListenerContainerFactory stockMarketContainerFactory() {
+        DefaultJmsListenerContainerFactory factory = new DefaultJmsListenerContainerFactory();
+        factory.setConnectionFactory(connectionFactory());
+        factory.setConcurrency("1-1"); //number of consumers to create. Starts with minimum then scales up as load increases
+        factory.setPubSubDomain(true);
+        factory.setMessageConverter(jacksonMessageConverter());
+        return factory;
     }
 
 }
