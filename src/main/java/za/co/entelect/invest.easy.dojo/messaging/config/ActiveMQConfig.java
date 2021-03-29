@@ -1,9 +1,6 @@
 package za.co.entelect.invest.easy.dojo.messaging.config;
 
-import org.apache.activemq.artemis.jms.client.ActiveMQConnectionFactory;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.jms.core.JmsTemplate;
 
 @Configuration
 public class ActiveMQConfig {
@@ -18,15 +15,8 @@ public class ActiveMQConfig {
 
     //TODO: 1. Create the connectionFactory
     //This will be an activeMQ connectionFactory since our message broker is ActiveMQ
-    @Bean
-    public ActiveMQConnectionFactory connectionFactory(){
-        return new ActiveMQConnectionFactory(URL,USERNAME,PASSWORD);
-    }
 
     //TODO: 2. Create a jmsTemplate bean named changeNotificationJmsTemplate
-    @Bean
-    public JmsTemplate changeNotificationJmsTemplate(){
-        return new JmsTemplate(connectionFactory());
-    }
+
 
 }
