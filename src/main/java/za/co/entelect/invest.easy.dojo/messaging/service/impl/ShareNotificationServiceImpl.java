@@ -17,6 +17,8 @@ import javax.jms.Message;
 import java.util.EnumMap;
 import java.util.Map;
 
+import static za.co.entelect.invest.easy.dojo.messaging.domain.Constants.NOTIFICATION_TOPIC;
+
 @Service
 public class ShareNotificationServiceImpl implements ShareNotificationService {
 
@@ -36,7 +38,7 @@ public class ShareNotificationServiceImpl implements ShareNotificationService {
     @Override
     public void sendShareNotification(ShareCode code, Integer price) {
         LOGGER.info("================Converting & Sending ShareNotification to Topic===================");
-        jmsTemplate.convertAndSend(Constants.NOTIFICATION_TOPIC, new ShareNotification(code, price, CODE_PRICE_MAP.get(code)), new MessagePostProcessor() {
+        jmsTemplate.convertAndSend(NOTIFICATION_TOPIC, new ShareNotification(code, price, CODE_PRICE_MAP.get(code)), new MessagePostProcessor() {
             @Override
             public Message postProcessMessage(Message message) throws JMSException {
                 message.setBooleanProperty("top40", code.getTop40());

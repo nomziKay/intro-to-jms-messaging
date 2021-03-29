@@ -12,6 +12,8 @@ import org.springframework.jms.support.converter.MessageType;
 
 import javax.jms.JMSException;
 
+import static za.co.entelect.invest.easy.dojo.messaging.domain.Constants.CHANGE_NOTIFICATION_QUEUE;
+
 @Configuration
 public class ActiveMQConfig {
 
@@ -39,7 +41,7 @@ public class ActiveMQConfig {
         SimpleMessageListenerContainer container = new SimpleMessageListenerContainer();
         container.setConnectionFactory(connectionFactory());
         container.setMessageListener(new InvestEasyChangeNotificationListener());
-        container.setDestinationName("Q.za.co.investeasy.change.notification");
+        container.setDestinationName(CHANGE_NOTIFICATION_QUEUE);
 
         return container;
     }
