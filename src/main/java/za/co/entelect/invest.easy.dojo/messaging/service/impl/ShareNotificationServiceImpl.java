@@ -27,7 +27,7 @@ public class ShareNotificationServiceImpl implements ShareNotificationService {
     private static final Map<ShareCode, Integer> CODE_PRICE_MAP = new EnumMap<ShareCode, Integer>(ShareCode.class);
 
     @Autowired
-    public ShareNotificationServiceImpl(@Qualifier("easyInvestJmsTemplate") JmsTemplate jmsTemplate) {
+    public ShareNotificationServiceImpl(JmsTemplate jmsTemplate) {
         this.jmsTemplate = jmsTemplate;
         CODE_PRICE_MAP.put(ShareCode.DSY, 2500);
         CODE_PRICE_MAP.put(ShareCode.MTN, 1700);
@@ -36,13 +36,7 @@ public class ShareNotificationServiceImpl implements ShareNotificationService {
     @Override
     public void sendShareNotification(ShareCode code, Integer price) {
         LOGGER.info("================Converting & Sending ShareNotification to Topic===================");
-        jmsTemplate.convertAndSend(Constants.NOTIFICATION_TOPIC, new ShareNotification(code, price, CODE_PRICE_MAP.get(code)), new MessagePostProcessor() {
-            @Override
-            public Message postProcessMessage(Message message) throws JMSException {
-                message.setBooleanProperty("top40", code.getTop40());
-                return message;
-            }
-        });
+        // ToDo - Convert and Send Message To Topic
         CODE_PRICE_MAP.put(code, price);
         LOGGER.info("================Done Converting & Sending ShareNotification to Topic===============");
     }
