@@ -1,7 +1,5 @@
 package za.co.entelect.invest.easy.dojo;
 
-import org.apache.activemq.artemis.jms.client.ActiveMQConnectionFactory;
-
 import javax.jms.*;
 import java.util.Scanner;
 
