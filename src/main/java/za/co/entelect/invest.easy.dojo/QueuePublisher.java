@@ -1,17 +1,20 @@
 package za.co.entelect.invest.easy.dojo;
 
-import javax.jms.Connection;
-import javax.jms.JMSException;
-import javax.jms.MessageProducer;
-import javax.jms.Session;
+import org.apache.activemq.artemis.jms.client.ActiveMQConnectionFactory;
+
+import javax.jms.*;
 import java.util.Scanner;
 
 public class QueuePublisher {
+    private final ConnectionFactory connectionFactory;
+
     private final Connection connection;
 
     private final MessageProducer messageProducer;
 
     private final Session session;
+
+    private final Destination destination;
 
     public QueuePublisher() throws JMSException {
         System.out.println("Initializing JMS connection");

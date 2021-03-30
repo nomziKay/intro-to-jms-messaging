@@ -1,17 +1,17 @@
 package za.co.entelect.invest.easy.dojo;
 
-import javax.jms.Connection;
-import javax.jms.JMSException;
-import javax.jms.MessageConsumer;
-import javax.jms.Session;
+import javax.jms.*;
 
 public class QueueListener {
+    //private final ConnectionFactory connectionFactory;
 
-    private final Connection connection;
+    //private final Connection connection;
 
-    private final MessageConsumer messageConsumer;
+    //private final MessageConsumer messageConsumer;
 
-    private final Session session;
+    //private final Session session;
+
+    //private final Destination destination;
 
     public QueueListener() throws JMSException {
         System.out.println("Initializing JMS connection");
