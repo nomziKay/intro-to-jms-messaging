@@ -19,7 +19,17 @@ public class QueuePublisher {
     public QueuePublisher() throws JMSException {
         System.out.println("Initializing JMS connection");
 
+        //Initialize JMS Connection factory
+
         //Initialize JMS Connection
+
+        //Initialize JMS session
+
+        //Initialize Destination
+
+        //Initialize MessageProducer
+
+        //Start Connection
 
         System.out.println("Initialization Complete");
     }
@@ -30,6 +40,7 @@ public class QueuePublisher {
 
     public void closeConnection() throws JMSException {
         System.out.println("Closing JMS connection");
+        //Close connection
     }
 
     public static void main(String[] args) throws JMSException {
